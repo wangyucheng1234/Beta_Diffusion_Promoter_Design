@@ -42,9 +42,10 @@ def get_args():
     parser.add_argument('--Shift', type = float, default = 0.4)
     parser.add_argument('--KLUB_Scale', type = float, default = 0.5)
     parser.add_argument('--KLUB_Shift', type = float, default = 0.4)
-    parser.add_argument('--T', type = int, default = 100)
+    parser.add_argument('--T', type = int, default = 0)
     parser.add_argument('--lossType', type = str, default = "KLUB") #'KLUB', 'KLUB_marginal','KLUB_conditional','KLUB_AS','ELBO','KLUB_marginal_AS','SNR_Weighted_ELBO','KLUB_conditional_AS','L2','L1'
     parser.add_argument('--batch_size', type = int, default = 256)
+
     parser.add_argument('--normalize_output', action = 'store_true') #Compensate the logit scale variation in different time. 
     parser.add_argument('--no-normalize_output', dest='normalize_output', action = 'store_false')
     parser.set_defaults(normalize_output=True)
@@ -52,11 +53,6 @@ def get_args():
     parser.add_argument("--debug", action = 'store_true')
     parser.add_argument('--no-debug', dest='debug', action='store_false') 
     parser.set_defaults(train=True)  
-    
-    parser.add_argument("--test", action = 'store_true')
-    parser.add_argument('--no-test', dest='test', action='store_false') 
-
-    parser.set_defaults(test=True)  
     
     args = parser.parse_args()
     print('Arguments:', args)
@@ -78,8 +74,6 @@ class ModelParameters:
          "../data/promoter_design/fantom.blacklist8.plus.bed.gz",
          "../data/promoter_design/fantom.blacklist8.minus.bed.gz"
         ]
-
-    diffusion_weights_file = 'steps400.cat4.speed_balance.time4.0.samples100000.pth'
 
     device = 'cuda'
     val_batch_size = 1
